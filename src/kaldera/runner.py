@@ -10,7 +10,11 @@ HARD_CAP = 50
 
 
 def load_context(state: TeamState, scenario: dict) -> None:
-    return
+    initial_context_dico = scenario.get("initial_context", None)
+    state.topic = initial_context_dico.get("topic", None)
+    state.required_steps = [
+        step_from_name(name) for name in initial_context_dico.get("required_steps", [])
+    ]
 
 
 def run_scenario(
@@ -28,7 +32,7 @@ def run_scenario(
         if max_iterations is not None
         else scenario.get("expected", {}).get("max_steps", HARD_CAP)
     )
-    for _ in range(HARD_CAP):
+    for _ in range(limit):
         decision = route(state)
         if decision == END:
             if state.status != "done":

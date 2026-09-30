@@ -8,6 +8,6 @@ if TYPE_CHECKING:
 
 
 def record(state: "TeamState", agent_id: str, message: str) -> dict:
-    entry = {"message": message}
+    entry = {"message": message, "agent_id": agent_id}
     state.log.append(entry)
     return entry
