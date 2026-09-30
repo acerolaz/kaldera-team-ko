@@ -16,7 +16,7 @@ class Step(str, Enum):
 STEP_BY_NAME: dict[str, Step] = {
     "RESEARCH": Step.RESEARCH,
     "DRAFT": Step.DRAFT,
-    "PROOFREAD": Step.REVIEW,
+    "REVIEW": Step.REVIEW,
     "FINALIZE": Step.FINALIZE,
 }
 
