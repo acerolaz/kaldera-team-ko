@@ -32,15 +32,20 @@ def run_scenario(
         if max_iterations is not None
         else scenario.get("expected", {}).get("max_steps", HARD_CAP)
     )
-    for _ in range(limit):
+    for _ in range(min(limit, HARD_CAP)):
         decision = route(state)
         if decision == END:
             if state.status != "done":
                 state.status = "done"
             break
         agent = registry[decision]
+        before = state.step_index
         agent.run(state)
         state.step_count += 1
+        # Invariant de progression : un tour sans avancée = boucle, on coupe tout de suite.
+        if state.step_index == before:
+            state.status = "aborted"
+            break
     else:
         state.status = "aborted"
     return state
