@@ -12,5 +12,5 @@ class Finalizer(Agent):
     handles = {Step.FINALIZE}
 
     def act(self, state: TeamState, step: Step) -> None:
-        state.artifacts["final"] = f"final:{state.artifacts.get('review', '')}"
+        state.artifacts["final"] = f"final[{self.name}]:{state.artifacts.get('review', 'research')}"
         state.status = "done"

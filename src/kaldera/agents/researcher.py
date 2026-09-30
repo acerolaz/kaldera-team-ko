@@ -12,4 +12,4 @@ class Researcher(Agent):
     handles = {Step.RESEARCH}
 
     def act(self, state: TeamState, step: Step) -> None:
-        state.artifacts["research"] = f"research:{state.topic}"
+        state.artifacts["research"] = f"research[{self.name}]:{state.topic}"

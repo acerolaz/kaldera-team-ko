@@ -10,19 +10,19 @@ from .steps import Step
 
 END = "__end__"
 
-AGENTS = [Researcher(), Writer(), Reviewer()]
+AGENTS = [Researcher(), Writer(), Reviewer(), Finalizer()]
 AGENTS_BY_NAME = {a.name: a for a in AGENTS}
 
 STEP_TO_AGENT: dict[Step, str] = {
     Step.RESEARCH: "researcher",
     Step.DRAFT: "writer",
-    Step.REVIEW: "writer",
+    Step.REVIEW: "reviewer",
     Step.FINALIZE: "finalizer",
 }
 
 
 def route(state: TeamState) -> str:
-    if state.step_index > len(state.required_steps):
+    if state.step_index >= len(state.required_steps):
         return END
     current = state.required_steps[state.step_index]
     return STEP_TO_AGENT[current]

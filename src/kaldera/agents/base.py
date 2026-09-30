@@ -30,6 +30,7 @@ class Agent:
         )
 
     def accepts(self, step: Step | None) -> bool:
+        # Ajouter la docstring correspondante
         return step in self.handles
 
     def run(self, state: TeamState) -> None:
