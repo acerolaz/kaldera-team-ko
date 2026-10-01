@@ -10,10 +10,10 @@ HARD_CAP = 50
 
 
 def load_context(state: TeamState, scenario: dict) -> None:
-    initial_context_dico = scenario.get("initial_context", None)
-    state.topic = initial_context_dico.get("topic", None)
+    initial_context = scenario.get("initial_context") or {}
+    state.topic = initial_context.get("topic")
     state.required_steps = [
-        step_from_name(name) for name in initial_context_dico.get("required_steps", [])
+        step_from_name(name) for name in initial_context.get("required_steps", [])
     ]
 
 
