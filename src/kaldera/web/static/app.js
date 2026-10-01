@@ -86,8 +86,14 @@ async function loadScenarios() {
     return showBanner("danger", "x", "API injoignable, vérifier make ui", loadScenarios);
   }
   hideBanner();
-  $("#scenario").replaceChildren(...scenarios.map((s) => el("option", { value: s.id }, s.id)));
-  if (scenarios.length) fill(scenarios[0]);
+  $("#scenario").replaceChildren(
+    el("option", { value: "" }, "— personnalisé —"),
+    ...scenarios.map((s) => el("option", { value: s.id }, s.id)),
+  );
+  if (scenarios.length) {
+    fill(scenarios[0]);
+    $("#scenario").value = scenarios[0].id;
+  }
 }
 
 async function launch() {
@@ -221,8 +227,12 @@ function renderStatus(result) {
   if (result.status === "done") {
     showBanner("ok", "check", `Terminé · ${result.step_count} étapes / max ${result.max_steps}`);
   } else if (result.status === "aborted") {
+    // Limite connue du runner : max_steps == nb d'étapes → aborted alors que tout est traité.
+    const all = result.step_count === result.required_steps.length
+      ? " : toutes les étapes ont été traitées, mais le garde-fou max_steps s'est déclenché (limite connue du runner)"
+      : "";
     showBanner("warn", "alert",
-      `Interrompu · ${result.step_count} étapes traitées sur ${result.required_steps.length} (max_steps = ${result.max_steps})`);
+      `Interrompu · ${result.step_count} étapes traitées sur ${result.required_steps.length} (max_steps = ${result.max_steps})${all}`);
   } else {
     showBanner("danger", "x", `${result.error.type} · ${result.error.agent} : ${result.error.message}`);
   }
@@ -308,19 +318,26 @@ document.addEventListener("keydown", (e) => {
 });
 
 // --- événements
-$("#scenario").addEventListener("change", (e) => fill(scenarios.find((s) => s.id === e.target.value)));
+// Toute saisie hors scénario repasse le sélecteur sur « personnalisé » : re-choisir un scénario le recharge.
+const markCustom = () => { $("#scenario").value = ""; };
+$("#scenario").addEventListener("change", (e) => {
+  const scenario = scenarios.find((s) => s.id === e.target.value);
+  if (scenario) fill(scenario);
+});
+$("#topic").addEventListener("input", markCustom);
+$("#max-steps").addEventListener("input", markCustom);
 $("#composer").addEventListener("submit", (e) => { e.preventDefault(); launch(); });
 $(".add-steps").addEventListener("click", (e) => {
   const step = e.target.closest("[data-step]")?.dataset.step;
-  if (step) { steps.push(step); renderSteps(); }
+  if (step) { steps.push(step); renderSteps(); markCustom(); }
 });
 $("#steps").addEventListener("click", (e) => {
   const index = e.target.closest("[data-remove]")?.dataset.remove;
-  if (index !== undefined) { steps.splice(Number(index), 1); renderSteps(); }
+  if (index !== undefined) { steps.splice(Number(index), 1); renderSteps(); markCustom(); }
 });
 $(".presets").addEventListener("click", (e) => {
   const preset = e.target.closest("[data-preset]")?.dataset.preset;
-  if (preset) fill(PRESETS[preset]);
+  if (preset) { fill(PRESETS[preset]); markCustom(); }
 });
 
 loadScenarios();
