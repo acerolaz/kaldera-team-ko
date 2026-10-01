@@ -1,19 +1,21 @@
-"""Fabrique du modèle de langage (Azure AI — Kimi-K2.6)."""
+"""Fabrique du modèle de langage (Kimi-K2.6 via un endpoint Azure AI compatible OpenAI)."""
+
 from __future__ import annotations
+from langchain_openai import ChatOpenAI
+from pydantic import SecretStr
 
 import os
 
 
 def get_llm():
-    """Retourne un chat model Azure AI configuré sur Kimi-K2.6.
+    """Retourne un client `ChatOpenAI` pointé sur l'endpoint Azure AI (Kimi-K2.6 par défaut).
 
-    Les imports lourds restent locaux pour que le cœur de l'orchestration
-    reste testable sans dépendance réseau.
+    Configuration : `AZURE_AI_ENDPOINT`, `AZURE_AI_API_KEY`, `AZURE_AI_MODEL` (optionnel).
+    Aucun module du cœur n'importe celui-ci : l'orchestration reste testable sans réseau.
     """
-    from langchain_azure_ai.chat_models import AzureAIChatCompletionsModel
 
-    return AzureAIChatCompletionsModel(
-        endpoint=os.environ["AZURE_AI_ENDPOINT"],
-        credential=os.environ["AZURE_AI_API_KEY"],
+    return ChatOpenAI(
+        base_url=os.environ["AZURE_AI_ENDPOINT"],
+        api_key=SecretStr(os.environ["AZURE_AI_API_KEY"]),
         model=os.environ.get("AZURE_AI_MODEL", "Kimi-K2.6"),
     )
