@@ -30,7 +30,7 @@ class Agent:
         )
 
     def accepts(self, step: Step | None) -> bool:
-        # Ajouter la docstring correspondante
+        """Indique si l'étape fait partie du périmètre de l'agent."""
         return step in self.handles
 
     def run(self, state: TeamState) -> None:
