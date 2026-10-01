@@ -97,6 +97,23 @@
       </div>
       <ol id="track" class="track" aria-label="Étapes du run"></ol>
       <p id="track-note" class="track-note"></p>
+      <div class="player" role="group" aria-label="Lecture">
+        <button type="button" class="btn icon-btn" id="restart" aria-label="Recommencer (R)" disabled>
+          <svg class="icon" aria-hidden="true"><use href="#i-restart"/></svg>
+        </button>
+        <button type="button" class="btn icon-btn" id="toggle" aria-label="Lecture (Espace)" disabled>
+          <svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>
+        </button>
+        <button type="button" class="btn icon-btn" id="next" aria-label="Étape suivante (→)" disabled>
+          <svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>
+        </button>
+        <span id="progress" class="progress">étape 0 / 0</span>
+        <div class="speeds" role="group" aria-label="Vitesse">
+          <button type="button" class="btn small" data-speed="0.5" aria-pressed="false">0.5×</button>
+          <button type="button" class="btn small" data-speed="1" aria-pressed="true">1×</button>
+          <button type="button" class="btn small" data-speed="2" aria-pressed="false">2×</button>
+        </div>
+      </div>
     </section>
 
     <section class="panels">

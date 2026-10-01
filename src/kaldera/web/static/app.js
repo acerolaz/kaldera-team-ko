@@ -228,10 +228,84 @@ function renderStatus(result) {
   }
 }
 
-// --- lecture (remplacée par le lecteur animé en Task 3)
-function play(result) {
-  render(result, result.log.length + 1);
+// --- lecteur : une frame toutes les BASE_DELAY / speed ms
+const BASE_DELAY = 900;
+const player = { result: null, frame: 0, timer: null, speed: 1 };
+
+const lastFrame = () => player.result.log.length + 1;
+
+function show(frame) {
+  player.frame = frame;
+  render(player.result, frame);
+  const done = Math.min(frame, player.result.log.length);
+  $("#progress").textContent = `étape ${done} / ${player.result.required_steps.length}`;
+  if (frame >= lastFrame()) pause();
 }
+
+function setToggle(playing) {
+  const button = $("#toggle");
+  button.setAttribute("aria-label", playing ? "Pause (Espace)" : "Lecture (Espace)");
+  button.querySelector("use").setAttribute("href", playing ? "#i-pause" : "#i-play");
+}
+
+function pause() {
+  clearInterval(player.timer);
+  player.timer = null;
+  setToggle(false);
+}
+
+function resume() {
+  if (!player.result) return;
+  if (player.frame >= lastFrame()) show(0);
+  clearInterval(player.timer);
+  player.timer = setInterval(() => show(player.frame + 1), BASE_DELAY / player.speed);
+  setToggle(true);
+}
+
+function next() {
+  if (!player.result) return;
+  pause();
+  if (player.frame < lastFrame()) show(player.frame + 1);
+}
+
+function restart() {
+  if (!player.result) return;
+  pause();
+  show(0);
+  resume();
+}
+
+function play(result) {
+  pause(); // une seule lecture à la fois, même si on relance pendant une lecture
+  player.result = result;
+  for (const id of ["#restart", "#toggle", "#next"]) $(id).disabled = false;
+  show(0);
+  resume();
+}
+
+$("#restart").addEventListener("click", restart);
+$("#next").addEventListener("click", next);
+$("#toggle").addEventListener("click", () => (player.timer ? pause() : resume()));
+$(".speeds").addEventListener("click", (e) => {
+  const button = e.target.closest("[data-speed]");
+  if (!button) return;
+  player.speed = Number(button.dataset.speed);
+  for (const b of document.querySelectorAll("[data-speed]")) b.setAttribute("aria-pressed", String(b === button));
+  if (player.timer) resume();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return; // ne jamais intercepter Cmd+R & co
+  if (e.target.closest("input, select, textarea")) return;
+  if (e.key === " ") {
+    if (e.target.closest("button")) return; // le bouton focus gère déjà Espace
+    e.preventDefault();
+    player.timer ? pause() : resume();
+  } else if (e.key === "ArrowRight") {
+    next();
+  } else if (e.key === "r" || e.key === "R") {
+    restart();
+  }
+});
 
 // --- événements
 $("#scenario").addEventListener("change", (e) => fill(scenarios.find((s) => s.id === e.target.value)));
