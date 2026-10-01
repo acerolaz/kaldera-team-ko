@@ -1,4 +1,5 @@
 """Agent de relecture."""
+
 from __future__ import annotations
 
 from ..state import TeamState

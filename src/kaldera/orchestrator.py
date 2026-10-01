@@ -1,4 +1,5 @@
 """Superviseur : routage des étapes vers les sous-agents."""
+
 from __future__ import annotations
 
 from .agents.finalizer import Finalizer

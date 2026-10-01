@@ -1,4 +1,5 @@
 """Console de démo Kaldera : routes fines, la logique vit dans service.py."""
+
 from __future__ import annotations
 
 from pathlib import Path

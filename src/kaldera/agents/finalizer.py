@@ -1,4 +1,5 @@
 """Agent de finalisation : assemble le résultat et clôt le flux."""
+
 from __future__ import annotations
 
 from ..state import TeamState
@@ -12,5 +13,7 @@ class Finalizer(Agent):
     handles = {Step.FINALIZE}
 
     def act(self, state: TeamState, step: Step) -> None:
-        state.artifacts["final"] = f"final[{self.name}]:{state.artifacts.get('review') or state.artifacts.get('research', '')}"
+        state.artifacts["final"] = (
+            f"final[{self.name}]:{state.artifacts.get('review') or state.artifacts.get('research', '')}"
+        )
         state.status = "done"

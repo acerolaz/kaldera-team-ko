@@ -1,4 +1,5 @@
 """Tests de trace : qui a fait quoi, dans quel ordre, combien de fois."""
+
 import json
 from pathlib import Path
 

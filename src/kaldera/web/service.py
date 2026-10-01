@@ -1,4 +1,5 @@
 """Exécution d'un run pour la console : aucune dépendance HTTP."""
+
 from __future__ import annotations
 
 import json

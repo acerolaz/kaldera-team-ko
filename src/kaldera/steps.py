@@ -1,4 +1,5 @@
 """Étapes métier du flux Kaldera et résolution depuis les scénarios."""
+
 from __future__ import annotations
 
 from enum import Enum
