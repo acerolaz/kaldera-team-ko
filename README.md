@@ -10,14 +10,14 @@ Orchestrateur d'une équipe d'agents LLM (`researcher`, `writer`, `reviewer`,
 - Sous-agents spécialisés, chacun avec un périmètre de rôle explicite.
 - Exécution déterministe et rejouable à partir de scénarios JSON.
 - Garde-fous d'exécution : budget d'étapes, budget de tokens par agent, journalisation traçable.
-- Chemin d'exécution « live » branché sur Azure AI (Kimi-K2.6) via LangChain + LangGraph.
+- Chemin d'exécution « live » branché sur Kimi-K2.6 (endpoint Azure AI compatible OpenAI) via `langchain-openai` + LangGraph.
 
 ## Stack
 
 - Python 3.11 (uv)
-- LangChain / langchain-core 0.3.x
-- langchain-azure-ai 0.1.x (Kimi-K2.6)
+- langchain-openai 0.3.x (client OpenAI-compatible vers l'endpoint Azure AI, Kimi-K2.6)
 - LangGraph 0.2.x
+- FastAPI + uvicorn (console de démo)
 - pytest 8.x
 
 ## Setup
