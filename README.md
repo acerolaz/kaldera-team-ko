@@ -40,6 +40,7 @@ l'orchestration tourne sans dépendance réseau.
 - `specs/flow_spec.md` — spécification du flux métier attendu
 - `scenarios/scenarios_test.json` — scénarios d'exécution rejouables
 - `tests/` — tests unitaires et d'intégration
+- `src/kaldera/web/` — console de démo (FastAPI + page statique), lancée par `make ui`
 - `docker-compose.yml`, `Dockerfile` — service d'exécution conteneurisé
 
 ## Useful commands
@@ -49,6 +50,7 @@ make fmt        # ruff format + autofix
 make lint       # ruff check
 make typecheck  # mypy
 make down       # stoppe le service docker
+make ui         # console de démo sur http://127.0.0.1:8000
 ```
 
 ## Known issues

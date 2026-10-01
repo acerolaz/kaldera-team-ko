@@ -1,4 +1,4 @@
-.PHONY: up down test fmt lint typecheck install
+.PHONY: up down test fmt lint typecheck install ui
 
 install:
 	uv sync
@@ -21,3 +21,6 @@ lint:
 
 typecheck:
 	uv run mypy src
+
+ui:
+	uv run uvicorn kaldera.web.app:app --app-dir src --reload
