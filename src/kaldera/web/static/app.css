@@ -129,6 +129,14 @@ main { padding: 24px; display: flex; flex-direction: column; gap: 24px; }
 .banner[data-kind="danger"] { color: var(--danger); background: var(--danger-bg); border-color: var(--danger); }
 .banner .btn { margin-left: auto; }
 
+/* Lecteur */
+.player { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+.icon-btn { width: 44px; height: 44px; padding: 0; }
+.icon-btn .icon { width: 20px; height: 20px; }
+.progress { margin: 0 8px; font-family: var(--mono); color: var(--muted); }
+.speeds { display: flex; gap: 4px; margin-left: auto; }
+.speeds [aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before { transition: none !important; animation: none !important; }
 }

@@ -126,3 +126,9 @@ async def test_index_serves_console(client):
 async def test_static_assets_are_served(client):
     for path in ("/static/app.css", "/static/app.js"):
         assert (await client.get(path)).status_code == 200
+
+
+async def test_index_has_player_controls(client):
+    html = (await client.get("/")).text
+    for control in ('id="restart"', 'id="toggle"', 'id="next"', 'id="progress"', 'data-speed="2"'):
+        assert control in html
