@@ -114,3 +114,15 @@ async def test_out_of_range_values_are_rejected(client, overrides):
 async def test_missing_field_is_rejected(client):
     res = await client.post("/api/runs", json={"topic": "x", "required_steps": ["RESEARCH"]})
     assert res.status_code == 422
+
+
+async def test_index_serves_console(client):
+    res = await client.get("/")
+    assert res.status_code == 200
+    assert res.headers["content-type"].startswith("text/html")
+    assert 'id="composer"' in res.text
+
+
+async def test_static_assets_are_served(client):
+    for path in ("/static/app.css", "/static/app.js"):
+        assert (await client.get(path)).status_code == 200
