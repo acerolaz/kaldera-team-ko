@@ -12,4 +12,4 @@ class Writer(Agent):
     handles = {Step.DRAFT}
 
     def act(self, state: TeamState, step: Step) -> None:
-        state.artifacts["draft"] = f"draft[{self.name}]:{state.artifacts.get('research', None)}"
+        state.artifacts["draft"] = f"draft[{self.name}]:{state.artifacts.get('research', '')}"
