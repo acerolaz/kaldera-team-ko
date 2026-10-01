@@ -4,6 +4,7 @@ Le runner déterministe (`runner.py`) reste le point d'entrée des scénarios
 rejouables ; ce module câble les mêmes agents dans un `StateGraph` pour
 l'exécution branchée sur le LLM.
 """
+
 from __future__ import annotations
 
 from .orchestrator import END, AGENTS_BY_NAME, route

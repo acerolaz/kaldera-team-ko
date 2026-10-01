@@ -1,4 +1,5 @@
 """Point d'entrée : rejoue les scénarios fournis et affiche le résultat."""
+
 from __future__ import annotations
 
 import json

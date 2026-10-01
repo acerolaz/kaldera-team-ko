@@ -1,4 +1,5 @@
 """Acceptance de l'API de la console Kaldera (HTTP → runner)."""
+
 import httpx
 import pytest
 
@@ -45,7 +46,10 @@ async def test_happy_path_is_done(client):
     assert sorted(body["artifacts"]) == ["draft", "final", "research", "review"]
     assert [e["agent_id"] for e in body["log"]] == ["researcher", "writer", "reviewer", "finalizer"]
     assert body["token_budgets"] == {
-        "researcher": 1000, "writer": 1000, "reviewer": 1000, "finalizer": 1000,
+        "researcher": 1000,
+        "writer": 1000,
+        "reviewer": 1000,
+        "finalizer": 1000,
     }
 
 

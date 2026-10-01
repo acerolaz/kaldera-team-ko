@@ -1,4 +1,5 @@
 """Classe de base des sous-agents."""
+
 from __future__ import annotations
 
 from .. import logging_utils
@@ -38,12 +39,12 @@ class Agent:
         if not self.accepts(step):
             raise RoleViolation(f"{self.name} ne traite pas l'étape {step}")
         used = state.agent_tokens.get(self.name, 0) + self.step_cost
-        
+
         if used > self.token_budget:
             raise BudgetExceeded(
                 f"{self.name} a dépassé son budget de tokens : {used} > {self.token_budget}"
             )
-        
+
         state.agent_tokens[self.name] = used
         assert step is not None
         self.act(state, step)

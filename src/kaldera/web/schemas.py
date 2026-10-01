@@ -1,4 +1,5 @@
 """Contrats Pydantic de l'API de la console."""
+
 from __future__ import annotations
 
 from typing import Annotated, Literal

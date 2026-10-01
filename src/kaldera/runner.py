@@ -1,4 +1,5 @@
 """Boucle d'exécution d'un scénario par l'équipe."""
+
 from __future__ import annotations
 
 from .orchestrator import END, AGENTS_BY_NAME, route
